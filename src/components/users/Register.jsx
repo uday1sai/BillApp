@@ -2,15 +2,41 @@ import React, { useState } from 'react'
  
 const Register = () => {
   let [formData,setFromData]=useState([])
+  const[errorMessage,setErrorMessage]=useState("")
   let handleChange=(e)=>{
     let{name,value}=e.target
+    if(name=="password"){
+      let {validateAll,getAllValidationErrorMessage}=validatePassword(value,8)
+      // console.log(getAllValidationErrorMessage());
+      validateAll()?setErrorMessage(""):setErrorMessage(getAllValidationErrorMessage())
+      value==""&&setErrorMessage("")
+    }
     setFromData({...formData,[name]:value})
+  }
+  const [matched,SetMatched]=useState(true)
+  const handleCheckPassword=(e)=>{
+    let {value}=e.target
+    formData.password!=value?SetMatched(false):SetMatched(true)
+    value=""&&SetMatched(false)
   }
    
   let handleSubmit=(e)=>{
     e.preventDefault()
+    let {name,userName,password,email}=formData
+    if(!name||!userName||!password||!email){
+      toast.error("All feilds are mandatory")
+      return
+    }
+    let {validateAll,getAllValidationErrorMessage}=validatePassword(password)
+    if(!validateAll()){
+      toast.error(`${getAllValidationErrorMessage()}`)
+    }
+    if(!matched){
+      toast.error("passsword and confirm password did not match")
+  return
+    }
+ 
     console.log(formData);
-    
   }
   return (
     <div className='bg-[#efefef] size-full flex justify-center items-center '>
@@ -35,8 +61,8 @@ const Register = () => {
           <input type="password" name="password" placeholder='Enter Password'  className='w-full outline-none px-4 h-10'onChange={handleChange}/>
         </div>
 
-        <div className='border-2 w-full flex justify-center items-center px-3 rounded-sm' >
-          <input type="password" name="" placeholder='Re-Enter Password'  className='w-full outline-none px-4 h-10'/>
+        <div className={`border-2 w-full flex justify-center items-center px-3 rounded-sm ${matched?'border-black':'border-red-700'}`}  >
+          <input type="password" name="" placeholder='Re-Enter Password'  className='w-full outline-none px-4 h-10' onChange={handleCheckPassword}/>
         </div>
 
         <div className='border-2 w-full flex justify-center items-center px-3 rounded-sm bg-blue-300'>
