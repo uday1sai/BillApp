@@ -35,11 +35,26 @@ const Register = () => {
       toast.error("passsword and confirm password did not match")
   return
     }
+
+// (async()=>{
+// let data=await Service.regiUser(formData)
+// try {
+//   if(data.status==201){
+//   toast.success("Registerd successfully")
+//   navigate("/")7
+// }else{
+//   toast.error("Something went wrong")
+// }
+// } catch (error) {
+//   toast.error("Something went wrong")
+// }
+// })()
+//   }
  
     console.log(formData);
   }
   return (
-    <div className='bg-[#efefef] size-full flex justify-center items-center '>
+    <div className='bg-[#efefef] size-full justify-center items-center '>
       <form action="" className='w-1/2 h-3/4 rounded-2xl bg-white shadow-2xl flex items-center flex-col gap-4 px-20 py-40 max-sm:w-[80%]' onSubmit={handleSubmit}>
         <div className='w-full flex justify-center items-center ' >
           <h1 className='text-3xl max-lg:text-sm max-sm:text-sm'>Registraion Form</h1>
@@ -68,6 +83,7 @@ const Register = () => {
         <div className='border-2 w-full flex justify-center items-center px-3 rounded-sm bg-blue-300'>
           <button  className='w-full outline-none px-4 h-10 '>Click</button>
         </div>
+       
       </form>
     </div>
   )
